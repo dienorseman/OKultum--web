@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <main>
-      <div>Hello world!</div>
-    </main>
-  );
+import { CounterTemplate } from "../ui/templates/CounterTemplate";
+
+export default function Page() {
+  return <CounterTemplate />
 }
