@@ -1,10 +1,11 @@
 import { useAppSelector } from "../../../app/hooks/storeHooks"
+import { Loader } from "../../atoms/Loader/Loader";
 import { DropFileBox } from "../../organisms/dashboard/DropFileBox"
 
 
 
 export const HomePage = () => {
-  // const {username}  = useAppSelector(state => state.auth);
+  const { loading } = useAppSelector(state => state.app);
   return (
     <div
       style={{
@@ -16,7 +17,11 @@ export const HomePage = () => {
         alignItems: 'center'
       }}
     >
-      <DropFileBox />
+      {
+        loading ?
+          <Loader /> :
+          <DropFileBox />
+      }
     </div>
   )
 }

@@ -1,40 +1,38 @@
 import { useRef, useState } from "react";
 import Papa from "papaparse";
+
+import csvLogo from "@assets/csv-logo.png";
+
 export const DropFileBox = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDragOver, setIsDragOver] = useState(false);
 
+    const processFile = (file: File | undefined) => {
+        if (!file) return;
+        Papa.parse(file, {
+            complete: (results) => {
+                console.log("CSV parsed:", results);
+            }
+        });
+    };
+
     const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        if (containerRef.current?.contains(e.relatedTarget as Node)) {
-            return;
-        }
+        if (containerRef.current?.contains(e.relatedTarget as Node)) return;
         setIsDragOver(true);
     };
 
     const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        if (containerRef.current?.contains(e.relatedTarget as Node)) {
-            return;
-        }
+        if (containerRef.current?.contains(e.relatedTarget as Node)) return;
         setIsDragOver(false);
-    };
-
-    const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
     };
 
     const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setIsDragOver(false);
         const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            Papa.parse(files[0], {
-                complete: function (results) {
-                    console.log(results);
-                }
-            });
-        }
+        if (files.length > 0) processFile(files[0]);
     };
 
     return (
@@ -42,77 +40,114 @@ export const DropFileBox = () => {
             ref={containerRef}
             onDragEnter={onDragEnter}
             onDragLeave={onDragLeave}
-            onDragOver={onDragOver}
+            onDragOver={(e) => e.preventDefault()}
             onDrop={onDrop}
             style={{
                 height: 400,
                 width: 700,
                 background: 'white',
-                borderWidth: isDragOver ? "0px" : "2px",
-                borderColor: 'white',
-                borderStyle: 'solid',
                 padding: isDragOver ? 0 : 20,
                 borderRadius: 16,
-                transition: 'padding 0.3s ease',
+                transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
             }}>
-            <div
-                style={{
-                    background: isDragOver ? '#E2EDF9' : '#F1F5FB',
-                    height: '100%',
-                    width: '100%',
-                    borderRadius: 16,
-                    borderWidth: isDragOver ? "0px" : "3px",
-                    borderColor: isDragOver ? 'transparent' : '#4355f88c',
-                    borderStyle: 'dashed',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    transition: 'border-color 0.3s ease',
+
+            <div style={{
+                background: isDragOver ? '#E2EDF9' : '#F1F5FB',
+                height: '100%',
+                width: '100%',
+                borderRadius: 16,
+                border: isDragOver ? '3px none transparent' : '3px dashed #4355f88c',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                transition: 'all 0.8s ease',
+                overflow: 'hidden'
+            }}>
+
+                <img
+                    src={csvLogo}
+                    style={{
+                        height: 100,
+                        width: 100,
+                        objectFit: 'cover',
+                        opacity: isDragOver ? 0.6 : 1,
+                        transform: isDragOver ? 'scale(1.2) translateY(-10px)' : 'scale(1) translateY(0)',
+                        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    }}
+                />
+
+                <div style={{
+                    opacity: isDragOver ? 1 : 0,
+                    maxHeight: isDragOver ? '100px' : '0px',
+                    transform: isDragOver ? 'translateY(0)' : 'translateY(20px)',
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    fontSize: '20px',
+                    fontWeight: '500',
+                    color: '#051a34',
+                    pointerEvents: 'none',
                 }}>
-                {isDragOver ?
+                    Drop your CSV file here.
+                </div>
 
-                    <div>Drop your csv</div>
-                    :
-                    <div>
-                        Drag CSV file
-                        <div>or</div>
-                        <label htmlFor="file"
-                            style={{
-                                height: 40,
-                                width: 140,
-                                background: '#4354F8',
-                                color: 'white',
-                                textAlign: 'center',
-                                cursor: 'pointer',
-                                borderRadius: 8,
-                                padding: 10,
-                                display: 'inline-block'
-                            }}
-                        >
-                            Browse Files
-                        </label>
-                        <input
-                            id="file"
-                            style={{ display: 'none' }}
-                            type="file"
-                            name="file"
-                            accept=".csv"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    Papa.parse(file, {
-                                        complete: function (results) {
-                                            console.log(results);
-                                        }
-                                    });
-                                }
+                <div style={{
+                    opacity: isDragOver ? 0 : 1,
+                    maxHeight: isDragOver ? '0px' : '300px',
+                    transform: isDragOver ? 'scale(0.95)' : 'scale(1)',
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 16,
+                    marginTop: isDragOver ? 0 : 16,
+                    pointerEvents: isDragOver ? 'none' : 'auto'
+                }}>
+                    <p style={{ fontSize: '20px', fontWeight: '500', color: '#051a34', margin: 0 }}>
+                        Drag CSV password file here.
+                    </p>
 
-                            }}
-                        />
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: 144,
+                        color: '#888888',
+                        fontSize: '20px',
+                        fontWeight: 500
+                    }}>
+                        <div style={{ flex: 1, height: '3px', backgroundColor: '#cccccc', marginRight: '10px' }}></div>
+                        <span>OR</span>
+                        <div style={{ flex: 1, height: '3px', backgroundColor: '#cccccc', marginLeft: '10px' }}></div>
                     </div>
-                }
 
+                    <label
+                        htmlFor="file"
+                        style={{
+                            height: 48,
+                            width: 156,
+                            background: '#4354F8',
+                            color: 'white',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                            fontWeight: "bold",
+                            fontSize: 20,
+                            borderRadius: 8,
+                            padding: '12px',
+                            display: 'inline-block',
+                        }}>
+                        Browse files
+                    </label>
+
+                    <input
+                        id="file"
+                        type="file"
+                        accept=".csv"
+                        style={{ display: 'none' }}
+                        onChange={(e) => processFile(e.target.files?.[0])}
+                    />
+                </div>
             </div>
         </div>
     );

@@ -1,15 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Password } from "../../app/models/password";
 
 
 
 export interface AppState {
     loading: boolean,
     baseApiUrl: string,
+    passwords: Password[]
+    error: string | null
 }
 
 const intialAppState: AppState = {
     loading: false,
-    baseApiUrl: 'https://0451da749114.ngrok-free.app'
+    baseApiUrl: 'https://0451da749114.ngrok-free.app',
+    passwords: [],
+    error: null
 }
 
 export const appSlice = createSlice({
@@ -17,11 +22,14 @@ export const appSlice = createSlice({
     initialState: intialAppState,
     reducers: {
         switchLoading: (state) => {
-                state.loading = !state.loading
-            }
-        }   
+            state.loading = !state.loading
+        },
+        setPasswords: (state, action: PayloadAction<Password[]>) => {
+            state.passwords = action.payload;
+        }
+    },
 })
 
-export const {switchLoading} = appSlice.actions;
+export const { switchLoading, setPasswords } = appSlice.actions;
 
 export default appSlice.reducer;
