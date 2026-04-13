@@ -26,6 +26,7 @@ export const appSlice = createSlice({
         },
         setPasswords: (state, action: PayloadAction<Password[]>) => {
             state.passwords = action.payload;
+            state.loading = false;
         }
     },
 })

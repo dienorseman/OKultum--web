@@ -1,11 +1,12 @@
 import { useAppSelector } from "../../../app/hooks/storeHooks"
 import { Loader } from "../../atoms/Loader/Loader";
 import { DropFileBox } from "../../organisms/dashboard/DropFileBox"
+import { PasswordsTable } from "../../organisms/dashboard/PasswordsTable";
 
 
 
 export const HomePage = () => {
-  const { loading } = useAppSelector(state => state.app);
+  const { loading, passwords } = useAppSelector(state => state.app);
   return (
     <div
       style={{
@@ -20,7 +21,10 @@ export const HomePage = () => {
       {
         loading ?
           <Loader /> :
-          <DropFileBox />
+          passwords.length > 0 ?
+            <PasswordsTable passwords={passwords} />
+            :
+            <DropFileBox />
       }
     </div>
   )

@@ -1,19 +1,17 @@
 import { useRef, useState } from "react";
-import Papa from "papaparse";
 
 import csvLogo from "@assets/csv-logo.png";
+import { ParseAndSetPasswords } from "../../../store/app/appThunks";
+import { useAppDispatch } from "../../../app/hooks/storeHooks";
 
 export const DropFileBox = () => {
+    const dispatch = useAppDispatch();
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDragOver, setIsDragOver] = useState(false);
 
     const processFile = (file: File | undefined) => {
         if (!file) return;
-        Papa.parse(file, {
-            complete: (results) => {
-                console.log("CSV parsed:", results);
-            }
-        });
+        dispatch(ParseAndSetPasswords(file));
     };
 
     const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {

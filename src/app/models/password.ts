@@ -2,10 +2,11 @@
 
 
 export interface Password {
+    id: string,
     url: string,
     username: string
     password: string,
-    createdAt: Date
-    lastTimeUsed: Date
-    lastTimeChanged: Date
+    createdAt: string
+    lastTimeUsed: string
+    lastTimeChanged: string
 }
