@@ -15,7 +15,7 @@ export const PasswordsTable = ({ passwords }: PasswordTableProps) => {
     const { setSortDescriptor, sortedPasswords, sortDescriptor } = useSortTable(testPass);
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 container pr-0">
             <Table variant="primary">
                 <Table.ScrollContainer aria-label="passwords" className="min-w-150">
                     <Table.Content

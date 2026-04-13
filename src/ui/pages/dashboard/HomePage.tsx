@@ -22,7 +22,9 @@ export const HomePage = () => {
         loading ?
           <Loader /> :
           passwords.length > 0 ?
-            <PasswordsTable passwords={passwords} />
+            <>
+              <PasswordsTable passwords={passwords} />
+            </>
             :
             <DropFileBox />
       }
