@@ -15,6 +15,6 @@ export const useTablePagination = (passwords: Password[], rowsPerPage: number) =
     const start = (page - 1) * rowsPerPage + 1;
     const end = Math.min(page * rowsPerPage, passwords.length);
 
-    return { start, end, paginatedItems, pages, setPage }
+    return { start, end, paginatedItems, pages, page, setPage, totalPages }
 
 }

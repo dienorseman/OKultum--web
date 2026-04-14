@@ -2,6 +2,7 @@ import { useAppSelector } from "../../../app/hooks/storeHooks"
 import { Loader } from "../../atoms/Loader/Loader";
 import { DropFileBox } from "../../organisms/dashboard/DropFileBox"
 import { PasswordsTable } from "../../organisms/dashboard/PasswordsTable";
+import { CheckPasswordsButton } from "../../atoms/Buttons/CheckPasswordsButton";
 
 
 
@@ -23,7 +24,10 @@ export const HomePage = () => {
           <Loader /> :
           passwords.length > 0 ?
             <>
-              <PasswordsTable passwords={passwords} />
+              <div className="flex flex-col items-center gap-2">
+                <PasswordsTable passwords={passwords} />
+                <CheckPasswordsButton />
+              </div>
             </>
             :
             <DropFileBox />

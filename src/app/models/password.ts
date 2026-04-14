@@ -9,4 +9,7 @@ export interface Password {
     createdAt: string
     lastTimeUsed: string
     lastTimeChanged: string
+    securityScore: number
+    breaches: number | undefined
 }
+

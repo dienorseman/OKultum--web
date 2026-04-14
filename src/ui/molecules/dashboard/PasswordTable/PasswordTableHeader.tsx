@@ -1,5 +1,5 @@
 import { Checkbox, Table } from "@heroui/react"
-import { SortableColHeader } from "../../utils/sortTableheader"
+import { SortableColHeader } from "../../../utils/sortTableheader"
 
 
 export const PasswordTableHeader = () => {
@@ -27,7 +27,20 @@ export const PasswordTableHeader = () => {
                     <SortableColHeader sortDir={sortDirection}>Password</SortableColHeader>
                 )}
             </Table.Column>
-
+            <Table.Column allowsSorting id="securityScore">
+                {({ sortDirection }) => (
+                    <SortableColHeader sortDir={sortDirection}>
+                        Score
+                    </SortableColHeader>
+                )}
+            </Table.Column>
+            <Table.Column allowsSorting id="breaches">
+                {({ sortDirection }) => (
+                    <SortableColHeader sortDir={sortDirection}>
+                        Breaches
+                    </SortableColHeader>
+                )}
+            </Table.Column>
             <Table.Column allowsSorting id="createdAt">
                 {({ sortDirection }) => (
                     <SortableColHeader sortDir={sortDirection}>
