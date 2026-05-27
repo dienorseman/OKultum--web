@@ -17,7 +17,7 @@ export const PasswordsTable = ({ passwords }: PasswordTableProps) => {
     const MAX_ROWS = 10;
     const { start, end, paginatedItems, pages, page, setPage, totalPages } = useTablePagination(sortedPasswords, MAX_ROWS);
     return (
-        <div className="flex flex-col gap-3 container pr-0">
+        <div className="flex flex-col gap-3 container pr-0 mb-4">
             <Table variant="primary">
                 <Table.ScrollContainer aria-label="passwords" className="min-w-150">
                     <Table.Content
